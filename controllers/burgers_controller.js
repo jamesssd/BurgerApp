@@ -14,9 +14,9 @@ router.get("/", function(req, res) {
     });
 });
 
-router.post("/api/cats", function(req, res) {
+router.post("/api/burgers", function(req, res) {
 cat.create([
-    "name", "sleepy"
+    "name", "devourit"
 ], [
     req.body.name, req.body.sleepy
 ], function(result) {

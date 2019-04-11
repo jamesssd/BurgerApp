@@ -1,21 +1,21 @@
 let orm = require('../config/orm.js');
 
-let burger = {
-    all: function(cd) {
-        orm.all('burger', function(res) {
+let burgers = {
+    all: function(cb) {
+        orm.all('burgers', function(res) {
             cb(res);
         });
     },
     create: function(cols, vals, cb) {
-        orm.create('burger', cols, vals, function(res){
+        orm.create('burgers', cols, vals, function(res){
             cb(res);
         });
     },
     delete: function(condition, cb) {
-        orm.delete('burger', condition, function(res) {
-            cd(res);
+        orm.delete('burgers', condition, function(res) {
+            cb(res);
         });
     }
 };
 
-module.exports = burger;
+module.exports = burgers;
