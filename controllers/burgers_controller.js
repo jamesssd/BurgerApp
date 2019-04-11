@@ -1,6 +1,8 @@
-let router = express.Router();
+let express =require('express');
 
-let burgers = require('.../models/burgers.js');
+var router = express.Router();
+
+let burgers = require('../models/burgers.js');
 
 router.get("/", function(req, res) {
     burgers.all(function(data) {

@@ -35,7 +35,7 @@ let orm = {
             }
             cb(result);
         });
-    };
+    },
     create: function(table, cols, vals, cb){
         let queryString = 'INSERT INTO ' + table;
 
