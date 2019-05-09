@@ -1,59 +1,44 @@
-let express =require('express');
-
+var express = require('express');
 var router = express.Router();
+var burger = require('../models/burger.js');
 
-let burgers = require('../models/burgers.js');
 
-router.get("/", function(req, res) {
-    burgers.all(function(data) {
-      var hbsObject = {
-        burgers: data
-      };
-      console.log(hbsObject);
-      res.render("index", hbsObject);
-    });
+//Setup Routes
+
+// Index Redirect
+router.get('/', function (req, res) 
+{
+  res.redirect('/index');
 });
 
-router.post("/api/burgers", function(req, res) {
-cat.create([
-    "name", "devourit"
-], [
-    req.body.name, req.body.sleepy
-], function(result) {
-    // Send back the ID of the new quote
-    res.json({ id: result.insertId });
-});
-});
-  
-router.put("/api/burgers/:id", function(req, res) {
-var condition = "id = " + req.params.id;
-
-console.log("condition", condition);
-
-burgers.update({
-    devouredit: req.body.devouredit
-}, condition, function(result) {
-    if (result.changedRows == 0) {
-    // If no rows were changed, then the ID must not exist, so 404
-    return res.status(404).end();
-    } else {
-    res.status(200).end();
-    }
-});
+// Index Page 
+router.get('/index', function (req, res) 
+{
+  burger.selectAll(function(data) 
+  {
+    var hbsObject = { burgers: data };
+    //console.log(hbsObject);
+    res.render('index', hbsObject);
+  });
 });
 
-router.delete("/api/burgers/:id", function(req, res) {
-let condition = "id = " + req.params.id;
-
-burgers.delete(condition, function(result) {
-    if (result.affectedRows == 0) {
-    // If no rows were changed, then the ID must not exist, so 404
-    return res.status(404).end();
-    } else {
-    res.status(200).end();
-    }
-});
+// Create a New Burger
+router.post('/burger/create', function (req, res) 
+{
+  burger.insertOne(req.body.burger_name, function() 
+  {
+    res.redirect('/index');
+  });
 });
 
-// Export routes for server.js to use.
+// Devour a Burger
+router.post('/burger/eat/:id', function (req, res) 
+{
+  burger.updateOne(req.params.id, function() 
+  {
+    res.redirect('/index');
+  });
+});
+
+// Export routes
 module.exports = router;
